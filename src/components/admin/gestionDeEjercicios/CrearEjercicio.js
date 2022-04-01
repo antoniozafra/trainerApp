@@ -29,10 +29,9 @@ export const CrearEjercicio = () => {
   //CREAMOS LA FUNCION PARA CREAR LA RUTINA
   const handdleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(nombre,zonaMuscular, pasos, nivelDificultad, imagen)
   
     //DISPARAMOS LA ACCION PARA  CREAR LA RUTINA
-    // dispatch(startcreateEjercicio(nombre,zonaMuscular, pasos, nivelDificultad, imagen));
+    dispatch(startcreateEjercicio(nombre,zonaMuscular, pasos, nivelDificultad, imagen));
   }
   
   

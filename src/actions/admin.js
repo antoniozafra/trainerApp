@@ -347,10 +347,242 @@ export const ejerciciosStartLoading = () => {
 }
 
 
-export const startcreateEjercicio = () => { 
-    console.log('aqui')
+export const startcreateEjercicio = (nombre,zonaMuscular, pasos, nivelDificultad, imagen) => { 
+
+
+    return async (dispatch) => {
+        
+    //LANZAMOS UN TRY CATCH PARA EL MANEJO DE ERRORES
+        try {
+            //EJECUTAMOS LA CONSULTA AL SERVIDOR Y LA GUARDAMOS EN UNA VARIABLE
+            const resp = await fetchSinToken('exercises/newExercise', {nombre,zonaMuscular, pasos, nivelDificultad, imagen},'POST');
+            const body = await resp.json();
+
+
+
+            if(body.ok){
+
+                return Swal.fire('Correcto', body.msg, 'success');
+
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            }
+            
+
+
+
+
+    }
+catch (error) {
+    console.log(error)
+}
+
+
+
+
+    }
 
 }
+
+export const startEditEjercicio = (IdEjercicio,nombre,zonaMuscular, pasos, nivelDificultad, imagen) => { 
+
+
+    return async (dispatch) => {
+        
+    //LANZAMOS UN TRY CATCH PARA EL MANEJO DE ERRORES
+        try {
+            //EJECUTAMOS LA CONSULTA AL SERVIDOR Y LA GUARDAMOS EN UNA VARIABLE
+            const resp = await fetchSinToken(`exercises/editExercise${IdEjercicio}`, {nombre,zonaMuscular, pasos, nivelDificultad, imagen},'PUT');
+            const body = await resp.json();
+            console.log(nombre,zonaMuscular, pasos, nivelDificultad, imagen);
+
+            console.log(body)
+
+
+
+            if(body.ok){
+
+                return Swal.fire('Correcto', body.msg, 'success');
+
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            }
+            
+
+
+
+
+    }
+catch (error) {
+    console.log(error)
+}
+
+
+
+
+    }
+
+}
+
+
+export const startDeleteEjercicio = (IdEjercicio) => {
+
+
+
+    return async (dispatch) => {
+
+     
+        try {
+            const resp = await fetchSinToken(`exercises/deleteExercise${IdEjercicio}`,{},'DELETE');
+            const body = await resp.json();
+
+            if(body.ok){
+                return Swal.fire('Correcto', body.msg, 'success');
+            }else {
+                return Swal.fire('Error', body.msg, 'error');
+            }
+
+
+            //CAPTURAMOS Y DEVOLVEMOS EL MENSAJE DE ERROR
+            
+        } catch (error) {
+            return Swal.fire('Error', 'error');
+
+        }
+
+       
+    }
+}
+
+export const recetasStartLoading = () => {
+    return async (dispatch) => {
+
+         //DISPARAMOS EL TRY CATCH PARA EL MANEJO DE LOS ERRORES
+    try {
+        //GUARDAMOS LOS DATOS DE LA PETICION DEL SERVIDOR
+        const resp = await fetchSinToken('recetas/getRecetas');
+        const body =  await resp.json();
+
+        const recetas =  await body.recetas;
+
+    
+
+        //DEVOLVEMOS LOS USUARIOS
+        return recetas;
+        
+
+        
+      //MOSTRAMOS MENSAJE DE ERROR AL USUSARIO  
+    } catch (error) {
+         console.log(error)
+        
+    }
+
+
+
+        
+
+    }
+}
+
+export const startCreateReceta = (nombre,tipoReceta, pasos,tiempoEstimado, nivelDificultad,ingredientes, imagen) => {
+
+    return async (dispatch) => {
+        
+        //LANZAMOS UN TRY CATCH PARA EL MANEJO DE ERRORES
+            try {
+                //EJECUTAMOS LA CONSULTA AL SERVIDOR Y LA GUARDAMOS EN UNA VARIABLE
+                const resp = await fetchSinToken('recetas/newReceta', {nombre,tipoReceta, pasos,tiempoEstimado, nivelDificultad,ingredientes, imagen},'POST');
+                const body = await resp.json();
+                console.log(body)
+    
+    
+    
+                if(body.ok){
+    
+                    return Swal.fire('Correcto', body.msg, 'success');
+    
+                }else{
+                    Swal.fire('Error', body.msg, 'error');
+                }
+                
+    
+            }
+            catch (error) {
+                console.log(error)
+            }
+    
+    
+        }
+
+}
+
+export const startEditReceta = (idReceta,nombre,tipoReceta, pasos,tiempoEstimado, nivelDificultad,ingredientes, imagen) => {
+
+
+
+    return async (dispatch) => {
+        
+        //LANZAMOS UN TRY CATCH PARA EL MANEJO DE ERRORES
+            try {
+
+                //DECLARAMOS LA DATA PARA ENVIARA
+                const data = {nombre,tipoReceta, pasos,tiempoEstimado, nivelDificultad,ingredientes, imagen};
+                //EJECUTAMOS LA CONSULTA AL SERVIDOR Y LA GUARDAMOS EN UNA VARIABLE
+                const resp = await fetchSinToken(`recetas/editReceta${idReceta}`, data,'PUT');
+                const body = await resp.json();
+
+                console.log(body)
+    
+    
+    
+                if(body.ok){
+    
+                    return Swal.fire('Correcto', body.msg, 'success');
+    
+                }else{
+                    Swal.fire('Error', body.msg, 'error');
+                }
+                
+            }
+            catch (error) {
+                Swal.fire('Error',  'error');
+            }
+    
+    
+        }
+
+}
+
+
+export const startDeleteReceta = (idReceta) => {
+    return async (dispatch) => {
+
+     
+        try {
+            const resp = await fetchSinToken(`recetas/deleteReceta${idReceta}`,{},'DELETE');
+            const body = await resp.json();
+            console.log(body)
+
+            if(body.ok){
+                return Swal.fire('Correcto', body.msg, 'success');
+            }else {
+                return Swal.fire('Error', body.msg, 'error');
+            }
+
+
+            //CAPTURAMOS Y DEVOLVEMOS EL MENSAJE DE ERROR
+            
+        } catch (error) {
+            return Swal.fire('Error', 'error');
+
+        }
+
+       
+    }
+}
+
+
 
 
 const userLoaded = (users) => ({
