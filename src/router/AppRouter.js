@@ -426,6 +426,18 @@ export const AppRouter =  () => {
                 }>
             </Route>
 
+            
+            {/*RUTA "/consultarDietas" PARA USUARIOS AUTENTICADOS */}
+            <Route
+                exact="exact"
+                path='/consultarDietas'
+                element={
+                  <PrivateRoute uid={uid}>
+                    <ConsultarDietas/>
+                  </PrivateRoute>
+                }>
+            </Route>
+
 
 
              {/*RUTA POR DEFECTO POR SI NO ENCUENTRA NINGUNA DE LAS ANTERIORES, DIRIGE A "/" */}

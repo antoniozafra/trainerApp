@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { recetasStartLoading } from '../../../actions/admin';
+import { generateTableRecetas } from '../../../hooks/generateTable';
 import { BackButton } from '../../ui/BackButton';
 import { NavbarAdmin } from '../../ui/NavbarAdmin';
 
@@ -16,20 +17,15 @@ export const VerRecetas = () => {
   //FUNCION PARA OBTENER LOS USUARIOS
   const handdleGetRecetas = async () => {
    //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
-   const recetas =  await dispatch(recetasStartLoading());
+   const data =   await dispatch(recetasStartLoading());
    const table = document.getElementById("table");
-   let data = '';
-  
-   if(recetas.length === 0){
-     return document.getElementById("table").innerHTML = "<p>No hay recetas disponibles</p>";
-   }
-  
-   for (let i = 0; i < recetas.length; i++) {
-     const receta = recetas[i];
-      data = data + JSON.stringify(receta)+'<br></br>';
-     
-     table.innerHTML = JSON.stringify(data)+ `Total de Recetas: ${recetas.length}` ;
-   }
+ 
+   const data_html =  generateTableRecetas(data);
+ 
+   console.log(data_html);
+   table.innerHTML = `<table>${data_html}</table><p>Total de Recetas: ${data.length}</p>`;
+ 
+ 
    
   }
   

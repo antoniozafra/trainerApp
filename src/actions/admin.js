@@ -582,6 +582,47 @@ export const startDeleteReceta = (idReceta) => {
     }
 }
 
+export const getRoutinesId = (id) => {
+    return async (dispatch) => {
+
+        
+        try {
+            const res = await fetchSinToken(`routines/getRoutinesId${id}`);
+            const body =  await res.json();
+            const rutinas =  await body.rutinas;
+            return rutinas;
+            
+        } catch (error) {
+            return Swal.fire('Error', 'error');
+        }
+
+
+
+    }
+
+}
+
+
+export const getDietasId = (id) => {
+    return async (dispatch) => {
+
+        
+        try {
+            const res = await fetchSinToken(`routines/getRoutinesId${id}`);
+            const body =  await res.json();
+            const rutinas =  await body.rutinas;
+            return rutinas;
+            
+        } catch (error) {
+            return Swal.fire('Error', 'error');
+        }
+
+
+
+    }
+
+}
+
 
 
 

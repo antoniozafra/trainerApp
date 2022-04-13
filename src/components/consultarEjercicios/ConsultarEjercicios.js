@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
+import { ejerciciosStartLoading } from '../../actions/admin';
 import { startChecking } from '../../actions/auth';
 import { fetchSinToken } from '../../helpers/fetch'
+import { generateTableEjercicios } from '../../hooks/generateTable';
 import { BackButton } from '../ui/BackButton'
 import { Navbar } from '../ui/Navbar';
+
+
 
 
 
@@ -20,26 +24,52 @@ const dispatch = useDispatch();
 
   
 
-//   useEffect(() => {
+  useEffect(() => {
         
-//     dispatch( startChecking() );
+    dispatch( startChecking() );
 
-// }, [dispatch])
+}, [dispatch])
 
 
-  return (
+//FUNCION PARA OBTENER LOS USUARIOS
+const handdleGetEjercicios = async () => {
+  //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
+  const data =   await dispatch(ejerciciosStartLoading());
+  const table = document.getElementById("table");
+
+  const data_html =  generateTableEjercicios(data);
+
+  console.log(data_html);
+  table.innerHTML = `<table>${data_html}</table><p>Total de Ejercicios: ${data.length}</p>`;
+
+
   
+ }
+ 
+ 
+  
+  return (
     <>
-    <div className='container.fluid'>
-
-    <Navbar/>
-    <h1>BUSCAR EJERCICIOS</h1>
+        <Navbar/>
+        <div className='row  formAdmin' id='table'>
+ 
+        </div>
+ 
+ 
+        <div className="form-group formAdmin  row justify-content-center" >
+          
+ 
+        <button className='btn btn-success btnAdmin '  onClick={handdleGetEjercicios}>Obtener Ejercicios</button>
+ 
+   
+ 
     
-    </div>
-    <BackButton path={'/'} title={'Volver'}/>
-    
+        <BackButton path={'/'} title={'Volver atras'}  />
+          </div>
     </>
-
-
+ 
+ 
+ 
+  
   )
-}
+  }

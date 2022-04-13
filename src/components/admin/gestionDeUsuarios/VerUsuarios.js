@@ -2,8 +2,10 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { usersStartLoading } from '../../../actions/admin';
 import { UserDisplay } from '../../../helpers/UserDisplay';
+import { generateTableUsers } from '../../../hooks/generateTable';
 import { BackButton } from '../../ui/BackButton'
 import { NavbarAdmin } from '../../ui/NavbarAdmin';
+
 
 // table.fnAddData([
 //   data[i].id,
@@ -26,20 +28,15 @@ export const VerUsuarios = () => {
 //FUNCION PARA OBTENER LOS USUARIOS
 const handdleGetUsers = async () => {
   //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
-  const users =  await dispatch(usersStartLoading());
+  const data =   await dispatch(usersStartLoading());
   const table = document.getElementById("table");
-  let data = '';
 
-  if(users.length === 0){
-    return document.getElementById("table").innerHTML = "<p>No hay rutinas disponibles</p>";
-  }
+  const data_html =  generateTableUsers(data);
 
-  for (let i = 0; i < users.length; i++) {
-    const user = users[i];
-     data = data + JSON.stringify(user)+'<br></br>';
-    
-    table.innerHTML = JSON.stringify(data)+ `Total de Usuarios: ${users.length}` ;
-  }
+  console.log(data_html);
+  table.innerHTML = `<table>${data_html}</table><p>Total de Usuarios: ${data.length}</p>`;
+
+ 
   
 }
 
@@ -48,15 +45,18 @@ const handdleGetUsers = async () => {
   return (
     <>
         <NavbarAdmin/>
-        <div className='row  formAdmin' id='table'>
+        
+
+          <div className='row  formAdmin' id='table'>
+
+         
 
         </div>
-
 
         <div className="form-group formAdmin  row justify-content-center" >
           
 
-        <button className='btn btn-success btnAdmin '  onClick={handdleGetUsers}>Obtener Usuarios</button>
+        <button className='btn btn-success btnAdmin mt-5 '  onClick={handdleGetUsers}>Obtener Usuarios</button>
 
      
 
@@ -65,6 +65,8 @@ const handdleGetUsers = async () => {
 
     
         <BackButton path={'/adminPanel'} title={'Volver al Panel de Control'}  />
+
+
           </div>
     </>
 

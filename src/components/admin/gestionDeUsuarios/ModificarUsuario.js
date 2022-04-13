@@ -32,6 +32,7 @@ export const ModificarUsuario = () => {
 
 const handdleEditForm = (e) => {
   e.preventDefault();
+  console.log('enviamos')
 
     //COMPROBAMOS QUE LAS CONTRASEÑAS SON CORRECTAS
     if(pass1 !== pass2){
@@ -76,8 +77,8 @@ const handdleEditForm = (e) => {
 
 
 
-          </form>
             <button type='submit 'className='btn btn-success btnAdmin ' >ACTUALIZAR CAMBIOS</button>
+          </form>
           
         <BackButton path={'/adminPanel'}  title={'Volver al Panel de Administrador'} />
         </div>

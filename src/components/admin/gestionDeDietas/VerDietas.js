@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { dietasStarLoading } from '../../../actions/admin';
+import { generateTableDietas } from '../../../hooks/generateTable';
 import { BackButton } from '../../ui/BackButton';
 import { NavbarAdmin } from '../../ui/NavbarAdmin';
 
@@ -15,21 +16,17 @@ export const VerDietas = () => {
 
 //FUNCION PARA OBTENER LOS USUARIOS
 const handdleGetDietas = async () => {
- //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
- const dietas =  await dispatch(dietasStarLoading());
- const table = document.getElementById("table");
- let data = '';
+  //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
+  const data =   await dispatch(dietasStarLoading());
+  const table = document.getElementById("table");
 
- if(dietas.length === 0){
-   return document.getElementById("table").innerHTML = "<p>No hay dietas disponibles</p>";
- }
+  const data_html =  generateTableDietas(data);
 
- for (let i = 0; i < dietas.length; i++) {
-   const dieta = dietas[i];
-    data = data + JSON.stringify(dieta)+'<br></br>';
-   
-   table.innerHTML = JSON.stringify(data)+ `Total de Dietas: ${dietas.length}` ;
- }
+  console.log(data_html);
+  table.innerHTML = `<table>${data_html}</table><p>Total de Dietas: ${data.length}</p>`;
+
+
+
  
 }
 

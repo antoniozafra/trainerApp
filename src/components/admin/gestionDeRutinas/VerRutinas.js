@@ -1,8 +1,10 @@
 import React, { useDebugValue } from 'react'
 import { useDispatch } from 'react-redux'
 import { routinesStartLoading } from '../../../actions/admin'
+import { generateTableRoutines } from '../../../hooks/generateTable'
 import { BackButton } from '../../ui/BackButton'
 import { NavbarAdmin } from '../../ui/NavbarAdmin'
+
 
 
 
@@ -17,22 +19,15 @@ export const VerRutinas = () => {
  //FUNCION PARA OBTENER LOS USUARIOS
  const handdleGetRoutines = async () => {
    //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
-   const routines =  await dispatch(routinesStartLoading());
-   const table = document.getElementById("table");
-   let data = '';
-   console.log(routines.length)
+  const data =   await dispatch(routinesStartLoading());
+  const table = document.getElementById("table");
 
-   if(routines.length == 0){
-     return document.getElementById("table").innerHTML = "<p>No hay rutinas disponibles</p>";
-   }
+  const data_html =  generateTableRoutines(data);
+
+  console.log(data_html);
+  table.innerHTML = `<table>${data_html}</table><p>Total de Rutinas: ${data.length}</p>`;
 
  
-   for (let i = 0; i < routines.length; i++) {
-     const routine = routines[i];
-      data = data + JSON.stringify(routine)+'<br></br>';
-     
-     table.innerHTML = JSON.stringify(data) + `Total de Rutinas: ${routines.length}` ;
-   }
 
 
 

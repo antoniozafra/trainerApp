@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ejerciciosStartLoading } from '../../../actions/admin';
+import { generateTableEjercicios } from '../../../hooks/generateTable';
 import { BackButton } from '../../ui/BackButton';
 import { NavbarAdmin } from '../../ui/NavbarAdmin';
 
@@ -14,21 +15,16 @@ export const VerEjercicios = () => {
 
 //FUNCION PARA OBTENER LOS USUARIOS
 const handdleGetEjercicios = async () => {
- //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
- const ejercicios =  await dispatch(ejerciciosStartLoading());
- const table = document.getElementById("table");
- let data = '';
-
- if(ejercicios.length === 0){
-   return document.getElementById("table").innerHTML = "<p>No hay ejercicios disponibles</p>";
- }
-
- for (let i = 0; i < ejercicios.length; i++) {
-   const ejercicio = ejercicios[i];
-    data = data + JSON.stringify(ejercicio)+'<br></br>';
-   
-   table.innerHTML = JSON.stringify(data)+ `Total de Ejercicios: ${ejercicios.length}` ;
- }
+   //DISPARAMOS LA ACCION PARA OBTENER LOS USUARIOS
+   const data =   await dispatch(ejerciciosStartLoading());
+   const table = document.getElementById("table");
+ 
+   const data_html =  generateTableEjercicios(data);
+ 
+   console.log(data_html);
+   table.innerHTML = `<table>${data_html}</table><p>Total de Ejercicios: ${data.length}</p>`;
+ 
+ 
  
 }
 

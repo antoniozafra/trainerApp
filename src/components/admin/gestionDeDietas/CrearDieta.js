@@ -91,7 +91,7 @@ export const CrearDieta = () => {
                    
     
     
-                    <button type='submit ' className='btn btn-lg btn-success text-center' >Crear Rutina</button>
+                    <button type='submit ' className='btn btn-lg btn-success text-center' >Crear Dieta</button>
                 </form>
     
     
